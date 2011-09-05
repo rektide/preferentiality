@@ -1,1 +1,1 @@
-<input type="text" class="prefsInput prefsCheckBox" name="{key}" id="{key}" alt="{summary}"> <label class="prefsLabel for="{key}">{title}</label>
+<input type="text" class="prefsInput prefsCheckBox" name="{key}" id="{key}" alt="{summary}" title="{summary}"> <label class="prefsLabel" for="{key}">{title}</label>

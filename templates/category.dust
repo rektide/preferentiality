@@ -1,7 +1,7 @@
 <div class="prefsCategory">
 	<h3 class="prefsHeader prefsSub">{title}</h3>
 	{#prefs}
-		{>"pref/{type}"/}
+		{>"pref/{type}"/}<br/>{~n}
 	{/prefs}
 </div>
 

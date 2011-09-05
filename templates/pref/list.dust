@@ -1,6 +1,6 @@
-<select class="prefsInput prefsList" name="{key}" id="key" alt="{summary}" >{~n}
+<select class="prefsInput prefsList" name="{key}" id="key" alt="{summary}" title="{summary}">{~n}
 	{#options}
 	<option value="{.entryValue}">{.entry}</option>{~n}
 	{/options}
 </select>
-<label class="prefsLabel for="{key}">{title}</label>
+<label class="prefsLabel" for="{key}">{title}</label>

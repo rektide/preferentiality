@@ -5,7 +5,7 @@
 		{>category/}
 		{@sep}<hr class="prefsHr"/>{/sep}
 	{/categories}
-	<button class="prefsButton prefsSubmit" id="submit" type="submit" text="Go" />
+	<button class="prefsButton prefsSubmit" id="submit" type="submit" >go</button>
 	</form>
 </div>
 
