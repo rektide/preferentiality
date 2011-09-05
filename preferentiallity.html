@@ -1,19 +1,53 @@
 <html>
 <head>
 	<title>preferential demo page</title>
+	<script src="lib/webintents.debug.js"></script>
 </head>
 <body>
 
-<script type="text/javascript">
-var uri="http://schema.eldergods.com/prefs/v1.0",
-	mimeType = "intent/prefs-fragment",
-	protocol = "web+prefs',
-	title = "PreferentiallityPrefs'
+<script>
+var uri= "http://schema.eldergods.com/prefs/v1.0",
+	mimeType= "intent/prefs-fragment",
+	protocol= "web+prefs",
+	title= "PreferentiallityPrefs",
+	example= "example.prefs",
+	example_doc= undefined
 
+// get example_doc
+var xhr = new XMLHttpRequest()
+xhr.onreadystatechange = function() {
+	if(xhr.readyState == 4 && xhr.status == 200)
+		example_doc = xhr.responseText
+	else if (xhr.raedyState == 4)
+		console.error("document fetch attempted but failed")
+}
+xhr.open("GET", example, true)
+xhr.setRequestHeader("Content-Type", "intent/prefs-fragment")
+xhr.send(null)
+
+// prepare intent
+var intent,
+	makeIntent = function() {
+		if(intent) return intent
+		return intent = new Intent(uri, mimeType, example_doc)
+	}
+
+var callback = function(intentData) {
+	console.debug("callback",intentData)
+}
+
+// executor
+var run = function() {
+	if(example_doc)	{
+		makeIntent()
+		navigator.startActivity(intent,callback)
+	}
+}
+window.doIntent = run
 
 </script>
+
 <a href="http://schema.eldergods.com/prefs/v1.0.html">install</a>
-<a href="prefs:///example.html">try an example</a>
-<a href="example.prefs">try an example</a>
+<a href="#" onclick="javascript:window.doIntent()">try an example</a>
 </body>
 </html>

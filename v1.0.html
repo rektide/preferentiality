@@ -1,10 +1,14 @@
 <html>
+<head>
 	<title>PreferentiallityPrefs</title>
+	<script src="lib/webintents.debug.js"></script>
 	<intent
 		action="http://schema.eldergods.com/prefs/v1.0"
 		type="intent/prefs-fragment"
 		href="v1.0.html"
 		title="PreferentiallityPrefs" />
+</head>
+<body>
 	<xml id="prefs" style="display:none">
 		<PreferenceScreen xmlns="http://schemas.android.com/apk/res/android">
 			<PreferenceCategory title="Look and Feel">
@@ -31,14 +35,25 @@
 	</xml>
 	<!-- <script src="templates.js" /> -->
 	<script>
-
-var target = window['intent'] && window.intent.data[0] && new DOMParser().parseFromString(window.intent.data[0]) || document.getElementById('prefs')
-debugger
-
+(function(){
+	if(window.intent)
+		console.log("incoming intent",window.intent)
+	var target = window.intent && window.intent.data || document.getElementById('prefs').innerHTML,
+		xml,
+		doc
+	try {
+		xml = new DOMParser().parseFromString(target,"text/xml")
+		doc = xml.documentElement
+	} catch(ex) {
+		console.error("DOMParse failed",ex,target)
+		return
+	}
+})()
 	</script>
 
 	<div id='content'>
 		<h1>hello</h1>
 	</div>
+</body>
 
 </html>
