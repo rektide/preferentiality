@@ -1,6 +1,7 @@
 # Prefs WebIntent & Preferentiallity #
 
-This project defines a Prefs WebIntent, and a baseline implementation *Preferentiallity*.  Based around an Android `PreferencesFragment`[1], the Prefs specification enables web applications to delegate settings selection to a common UI, and returns to the application a SharedPreference response.  This is desireable because:
+This project defines a Prefs WebIntent, and a baseline implementation *Preferentiallity*.  Based around an Android `PreferencesFragment`[1], the Prefs specification enables web applications to delegate settings selection to a common UI, and returns to the application a SharedPreference response.  This is desirable because:
+
 - Allows the user to select a User Agent for the Intent to their liking
 - Exposes a common UI across webapps
 - Frees developers and extension writers from having to design settings GUIs
