@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory title="Example Checkboxes">
+		<CheckBoxPreference key="checkBox" title="Can you check this?" summary="Is this a checkbox?"/>
+		<CheckBoxPreference key="checkBox" title="Think this's cool??" summary="Think this's cool?"/>
+	</PreferenceCategory>
+	<PreferenceCategory title="Other Controls">
+		<EditTextPreference key="editText" title="Edit some text, why don'tcha?" summary="Something to edit!" />
+		<ListPreference key="color" title="Color" summary="Select a color" entries="entries" entryValues="entryValues" dialogTitle="Your Color Options Are:">
+			<resources>
+				<string-array name="entries">
+					<item>red</item>
+					<item>green</item>
+					<item>blue</item>	
+				</string-array>
+				<string-array name="entryValues">
+					<item>#DF0000</item>
+					<item>#00DF00</item>
+					<item>#0000DF</item>
+				</string-array>
+			</resources>
+		</ListPreference>
+	</PreferenceCategory>
+</PreferenceScreen>
+

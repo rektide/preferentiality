@@ -1,0 +1,1 @@
+<input type="checkbox" class="prefsInput prefsCheckBox" name="{key}" id="{key}" alt="{summary}"> <label class="prefsLabel for="{key}">{title}</label>

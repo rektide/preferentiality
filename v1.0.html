@@ -1,0 +1,44 @@
+<html>
+	<title>PreferentiallityPrefs</title>
+	<intent
+		action="http://schema.eldergods.com/prefs/v1.0"
+		type="intent/prefs-fragment"
+		href="v1.0.html"
+		title="PreferentiallityPrefs" />
+	<xml id="prefs" style="display:none">
+		<PreferenceScreen xmlns="http://schemas.android.com/apk/res/android">
+			<PreferenceCategory title="Look and Feel">
+			</PreferenceCategory>
+			<PreferenceCategory title="Example Controls">
+				<CheckBoxPreference key="checkBox" title="CheckBox" summary="CheckBox Summary"/>
+				<EditTextPreference key="editText" title="EditText" summary="EditText Summary" />
+				<ListPreference key="listPreference" title="listPreference" summary="ListPreference Summary" entries="entries" entryValues="entryValues" dialogTitle="Your List Options Are:">
+					<resources>
+						<string-array name="entries">
+							<item>one</item>
+							<item>two</item>
+							<item>three</item>	
+						</string-array>
+						<string-array name="entryValues">
+							<item>1</item>
+							<item>2</item>
+							<item>3</item>
+						</string-array>
+					</resources>
+				</ListPreference>
+			</PreferenceCategory>
+		</PreferenceScreen>
+	</xml>
+	<!-- <script src="templates.js" /> -->
+	<script>
+
+var target = window['intent'] && window.intent.data[0] && new DOMParser().parseFromString(window.intent.data[0]) || document.getElementById('prefs')
+debugger
+
+	</script>
+
+	<div id='content'>
+		<h1>hello</h1>
+	</div>
+
+</html>
