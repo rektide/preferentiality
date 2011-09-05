@@ -9,13 +9,13 @@
 		title="PreferentiallityPrefs" />
 </head>
 <body>
-	<xml id="prefs" style="display:none">
+	<script id="prefs" type="application/xml">
 		<PreferenceScreen xmlns="http://schemas.android.com/apk/res/android">
 			<PreferenceCategory title="Look and Feel">
 			</PreferenceCategory>
 			<PreferenceCategory title="Example Controls">
-				<CheckBoxPreference key="checkBox" title="CheckBox" summary="CheckBox Summary"/>
-				<EditTextPreference key="editText" title="EditText" summary="EditText Summary" />
+				<CheckBoxPreference key="checkBox" title="CheckBox" summary="CheckBox Summary"></CheckBoxPreference>
+				<EditTextPreference key="editText" title="EditText" summary="EditText Summary"></EditTextPreference>
 				<ListPreference key="listPreference" title="listPreference" summary="ListPreference Summary" entries="entries" entryValues="entryValues" dialogTitle="Your List Options Are:">
 					<resources>
 						<string-array name="entries">
@@ -32,22 +32,111 @@
 				</ListPreference>
 			</PreferenceCategory>
 		</PreferenceScreen>
-	</xml>
+	</script>
 	<!-- <script src="templates.js" /> -->
 	<script>
 (function(){
+
+	// load intent, or embedded prefs-fragment
 	if(window.intent)
 		console.log("incoming intent",window.intent)
-	var target = window.intent && window.intent.data || document.getElementById('prefs').innerHTML,
+	var target= window.intent && window.intent.data || document.getElementById('prefs').innerHTML,
 		xml,
 		doc
 	try {
-		xml = new DOMParser().parseFromString(target,"text/xml")
-		doc = xml.documentElement
+		xml= new DOMParser().parseFromString(target,"text/xml")
+		doc= xml.documentElement
 	} catch(ex) {
 		console.error("DOMParse failed",ex,target)
 		return
 	}
+
+	// helper function to unpack <resources> stanzas
+	function getResources(el) {
+		if(el.nodeType != Node.ELEMENT_NODE)
+			return
+		var agg= {}
+
+		if(el.tagName != 'resources') {
+			var agg= {},
+				resources= el.childNodes,
+				resource,
+				i= 0
+			while((resource= resources[i++]))
+				if(resource.nodeType == Node.ELEMENT_NODE && resource.tagName.toLowerCase() == 'resources') {
+					var cur= getResources(resource)
+					for(var i in cur)
+						agg[i]= cur[i]
+				} 
+			return agg
+		}
+
+		var children= el.childNodes,
+			child,
+			name,
+			j= 0
+		while((child= children[j++]))
+			if(child.nodeType == Node.ELEMENT_NODE && (name= child.attributes.name))
+				if(child.tagName == 'string-array') {
+					var arr= agg[name.value]= [],
+						saChildren= child.childNodes,
+						saChild,
+						k= 0
+					while((saChild= saChildren[k++]))
+						if(saChild.nodeType == Node.ELEMENT_NODE && saChild.tagName == 'item')
+							arr.push(saChild.innerText)
+				}
+		return agg
+	}
+	
+
+	// build context for template
+	var cats= [],
+		ctx= {categories:cats},
+		androidNs= "http://schemas.android.com/apk/res/android",
+		suffix= "Preference",
+		suffix_len= suffix.length,
+		children= doc.childNodes,
+		category= null,
+		i= 0
+	while((category= children[i++])) {
+		if(category.nodeType == Node.ELEMENT_NODE && category.namespaceURI == androidNs && category.tagName == 'PreferenceCategory') {
+			var ca_prefs= [],
+				cat= {title: category.attributes.title.value, prefs: ca_prefs},
+				prefs= category.childNodes,
+				pref,
+				j= 0
+			while((pref= prefs[j++])) {
+				if(pref.nodeType != Node.ELEMENT_NODE)
+					continue
+				var name= pref.tagName,
+					pre_len= name.length - suffix_len,
+					tail= name.substr(pre_len)
+				if(pref.namespaceURI == androidNs && tail == 'Preference')
+				{
+					var type= name.charAt(0).toLowerCase() + name.substr(1,pre_len-1),
+						pref_item= {type:type, title:pref.attributes.title.value, key:pref.attributes.key.value, summary:pref.attributes.summary.value}
+					if(type == 'list') {
+						var resources= getResources(pref),
+							entries= resources[pref.attributes.entries.value],
+							entryValues= resources[pref.attributes.entryValues.value],
+							opt,
+							optVal,
+							options= pref_item.options= [],
+							k= 0
+						while((opt= entries[k]) && (optVal= entryValues[k++]))
+							options.push({entry: opt, entryValue: optVal})
+						ca_prefs.push(pref_item)
+					} else if (type == 'checkBox' || type == 'editText') {
+						ca_prefs.push(pref_item)
+					}
+				}
+				
+			}
+			cats.push(cat)
+		}
+	}
+	console.log("built",ctx)
 })()
 	</script>
 
