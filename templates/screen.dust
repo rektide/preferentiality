@@ -2,7 +2,7 @@
 	<h1 class="prefsHeader>PreferencesScreen</h1>
 	<form name="prefs">
 	{#categories}
-		{>category id="{@idx}" /}
+		{>category/}
 		{@sep}<hr class="prefsHr"/>{/sep}
 	{/categories}
 	<button class="prefsButton prefsSubmit" id="submit" type="submit" text="Go" />

@@ -1,0 +1,19 @@
+{
+	"name": "preferentiallity",
+	"description": "implementation of Prefs WebIntent",
+	"version": "1.0.0",
+	"keywords": ["web-intents", "prefs", "preferences", "dust"],
+	"maintainers": [{
+		"name": "Matthew 'rektide' Fowle",
+		"email": "rektide@voodoowarez.com",
+		"web": "http://voodoowarez.com"
+	}],
+	"homepage": "http://voodoowarez.com/preferentiallity",
+	"implements": ["CommonJS/Modules/1.0"],
+	"engines": { "node": ">=0.4.0" },
+	"repository": {"type": "git", "url": "http://git.voodoowarez.com/preferentiallity.git"},
+	"dependencies": {
+		"file": "0.1.1",
+		"dust": "0.3.0"
+	}
+}
